@@ -280,9 +280,11 @@ function EvalsExamples() {
       rule: 'From system.md',
       input: 'How do I reset my password?',
       fail: (
-        <>
-          Whole sentences in <strong>bold</strong>. Walls of text. No bullets.
-        </>
+          <>
+            Whole sentences in <strong>bold</strong>.
+            <br />
+            Walls of text. No bullets.
+          </>
       ),
       pass: (
         <>
