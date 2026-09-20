@@ -742,7 +742,7 @@ const slides: Slide[] = [
             the real world
           </p>
         </div>
-        <figure className="example-frame cursor-frame example-frame-dark">
+        <figure className="example-frame cursor-frame">
           <img
             src={steerWithoutInterrupting}
             alt="Cursor agent input showing placeholder microcopy: Steer without interrupting, with Auto Cost and a stop control."

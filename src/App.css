@@ -1040,22 +1040,24 @@ h2 {
   place-items: center;
   min-height: 0;
   height: 100%;
-  padding: 12px;
+  padding: clamp(20px, 2.5vw, 36px);
   overflow: hidden;
+  background: var(--off-white);
 }
 
 .cursor-frame img {
   width: auto;
   height: auto;
-  max-width: min(100%, 520px);
-  max-height: min(28vh, 220px);
+  max-width: min(100%, 720px);
+  max-height: min(36vh, 300px);
   object-fit: contain;
   object-position: center center;
   transform: none;
-  background: var(--surface-raised);
+  background: transparent;
   border: 0;
-  border-radius: 0;
+  border-radius: var(--shot-radius);
   image-rendering: auto;
+  filter: contrast(1.22) brightness(1.28) saturate(1.05);
 }
 
 .blank-box-layout {
