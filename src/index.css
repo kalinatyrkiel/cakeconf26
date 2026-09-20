@@ -1,7 +1,54 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
+:root {
+  /* Brand */
+  --black: #060606;
+  --white: #ffffff;
+  --off-white: #ececec;
+  --green: #009402;
+  --green-on-dark: #1fc01f;
+  --green-fill: #006802;
+  --green-wash: #00b504;
+  --pink: #e852a2;
+  --pink-text: #ff7ac0;
+  --pink-fill: #eb6bc2;
+  --muted: #b0b0b0;
+
+  /* Surfaces */
+  --stage: #111111;
+  --surface: #121212;
+  --surface-raised: #1e1e1e;
+  --surface-code: #161616;
+  --surface-panel: #1a1a1a;
+  --surface-chrome: #2a2a2a;
+  --surface-light: #f3f3f3;
+
+  /* Text — all ≥ 7:1 on --black (WCAG AAA normal) */
+  --text-secondary: #d4d4d4;
+  --text-meta: #b0b0b0;
+  --text-dim: #b0b0b0;
+  --text-faint: #b0b0b0;
+  --text-soft: #c8c8c8;
+  --text-code: #d8d8d8;
+  /* Citations — WCAG AA normal (≥4.5:1 on black) */
+  --cite-meta: #787878;
+  --cite-body: #c0c0c0;
+
+  /* Status */
+  --status-fail: #ffc4e4;
+  --status-pass: #c8f5c8;
+  --status-pass-bright: #9dff9d;
+
+  /* Borders */
+  --border-strong: #3a3a3a;
+  --border-light: #d8d8d8;
+  /* Product screenshots on dark slides */
+  --shot-border: 1px solid rgba(255, 255, 255, 0.22);
+  --shot-radius: 6px;
+}
+
 html {
-  background: #060606;
+  background: var(--black);
 }
 
 body {
@@ -20,6 +67,6 @@ a {
 }
 
 button:focus-visible {
-  outline: 3px solid #e852a2;
+  outline: 3px solid var(--pink-text);
   outline-offset: 3px;
 }

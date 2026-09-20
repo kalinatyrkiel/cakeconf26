@@ -150,33 +150,36 @@ function BlankBoxAnxiety({ build }: { build: number }) {
   )
 }
 
-function PromptModesExplore() {
+function PromptModesExplore({
+  activeId,
+}: {
+  activeId: 'screens' | 'dialogue' | 'prompts'
+}) {
   const modes = [
     {
-      id: 'screens',
+      id: 'screens' as const,
       label: 'Screens',
       detail: 'Buttons, labels, fixed paths',
       image: modeScreens,
       alt: 'Select model menu showing Default, GPT-5.6 Terra, and GPT-5.6 Luna options.',
     },
     {
-      id: 'dialogue',
+      id: 'dialogue' as const,
       label: 'Dialogue',
       detail: 'Back-and-forth, contextual help',
       image: modeDialogue,
       alt: 'Gdańsk dialogue options: check flight times versus Warsaw, or build a 48-hour weekend itinerary.',
     },
     {
-      id: 'prompts',
+      id: 'prompts' as const,
       label: 'Prompts',
       detail: 'Intent suggested or typed in freeform',
       image: modePrompts,
       alt: 'Tatra prompt suggestions for hiking apps, packing, mountain huts, via ferrata, and avalanche safety.',
     },
-  ] as const
+  ]
 
-  const [active, setActive] = useState<(typeof modes)[number]['id']>('screens')
-  const preview = modes.find((mode) => mode.id === active) ?? modes[0]
+  const preview = modes.find((mode) => mode.id === activeId) ?? modes[0]
 
   return (
     <div className="modes-explore">
@@ -184,25 +187,22 @@ function PromptModesExplore() {
         The world of <span className="green">prompt-driven UX</span>
       </h2>
       <div className="modes-explore-body">
-        <div
-          className="modes-menu"
-          onMouseLeave={() => setActive('screens')}
-          onClick={(event) => event.stopPropagation()}
-        >
+        <div className="modes-menu">
           {modes.map((mode) => (
-            <button
-              type="button"
+            <div
               key={mode.id}
-              className={`modes-menu-item${active === mode.id ? ' is-active' : ''}`}
-              onMouseEnter={() => setActive(mode.id)}
-              onFocus={() => setActive(mode.id)}
+              className={`modes-menu-item${activeId === mode.id ? ' is-active' : ''}`}
             >
               <span className="modes-menu-item-copy">
                 <strong>{mode.label}</strong>
                 <small>{mode.detail}</small>
               </span>
-              {active === mode.id && <span className="modes-check" aria-hidden="true">✓</span>}
-            </button>
+              {activeId === mode.id && (
+                <span className="modes-check" aria-hidden="true">
+                  ✓
+                </span>
+              )}
+            </div>
           ))}
         </div>
         <div className={`modes-preview has-image modes-preview-${preview.id}`}>
@@ -213,15 +213,9 @@ function PromptModesExplore() {
   )
 }
 
-function SystemPromptMock() {
-  const [showSuggestion, setShowSuggestion] = useState(false)
-
+function SystemPromptMock({ showSuggestion }: { showSuggestion: boolean }) {
   return (
-    <div
-      className="prompt-mock"
-      onClick={(event) => event.stopPropagation()}
-      onMouseLeave={() => setShowSuggestion(false)}
-    >
+    <div className="prompt-mock">
       <div className="prompt-mock-copy">
         <p className="kicker">System prompt</p>
         <h2 className="prompt-mock-heading">
@@ -242,16 +236,13 @@ function SystemPromptMock() {
             {'\n'}
             <span className="prompt-line">Be clear and concise.</span>
             {'\n'}
-            <button
-              type="button"
+            <span
               className={`prompt-line is-hot${showSuggestion ? ' is-on' : ''}`}
-              onMouseEnter={() => setShowSuggestion(true)}
-              onFocus={() => setShowSuggestion(true)}
             >
               {showSuggestion
                 ? 'Use short paragraphs. Bullets for 3+ steps. Bold only labels or critical warnings, never whole sentences.'
                 : 'Bold important words.'}
-            </button>
+            </span>
             {'\n'}
             <span className="prompt-line">Keep answers short.</span>
           </code>
@@ -275,27 +266,22 @@ function SystemPromptMock() {
 function EvalsExamples() {
   const cases = [
     {
-      id: '01',
       task: 'Formatting',
-      rule: 'From system.md',
       input: 'How do I reset my password?',
       fail: (
-          <>
-            Whole sentences in <strong>bold</strong>.
-            <br />
-            Walls of text. No bullets.
-          </>
+        <>
+          Whole sentences in bold. Walls of text. No bullets.
+        </>
       ),
       pass: (
         <>
-          Short paragraphs. Bullets for 3+ steps. Bold only labels or warnings.
+          Paragraphs up to 3 sentences. Bullets for 3+ steps. Bold only labels
+          or warnings.
         </>
       ),
     },
     {
-      id: '02',
       task: 'Tone',
-      rule: 'No fake empathy',
       input: 'This is the third time it failed.',
       fail: '“I understand how frustrating that must feel…”',
       pass: 'Name the limit. Offer the next concrete step.',
@@ -309,9 +295,6 @@ function EvalsExamples() {
         <h2 className="slide-title wide-title">
           Test prompt changes with <strong>standardized tasks</strong>
         </h2>
-        <p className="evals-subhead">
-          Content designers write the cases. Engineering runs them.
-        </p>
       </div>
       <div className="evals-table">
         <div className="evals-table-head" aria-hidden="true">
@@ -327,11 +310,9 @@ function EvalsExamples() {
           </span>
         </div>
         {cases.map((item) => (
-          <article key={item.id} className="evals-row">
+          <article key={item.task} className="evals-row">
             <div className="evals-task">
-              <span className="card-label">{item.id}</span>
               <h3>{item.task}</h3>
-              <p>{item.rule}</p>
             </div>
             <p className="evals-input">
               <span className="evals-quote">“{item.input}”</span>
@@ -405,8 +386,8 @@ function QuickPromptSkill() {
           Claude skills that <span className="green">scale</span> the craft
         </h2>
         <p className="skills-subhead">
-          Content designers encode the rules once. The skill generates and checks
-          copy for the whole org.
+          Content designers write the rules – the skill scales them across the
+          org.
         </p>
       </div>
       <article className="skill-card is-peek">
@@ -418,7 +399,6 @@ function QuickPromptSkill() {
           Generates structured quick prompts that hold to the 2–4 word rule.
         </p>
         <div className="skill-output is-in">
-          <span className="skill-output-label">Prompts</span>
           <span>Create a trigger</span>
           <span>Check duplicate triggers</span>
           <span className="skill-output-check">
@@ -430,7 +410,7 @@ function QuickPromptSkill() {
   )
 }
 
-function RecapFlipCards() {
+function RecapFlipCards({ flippedCount }: { flippedCount: number }) {
   const cards = [
     {
       oldFront: 'Microcopy',
@@ -453,20 +433,18 @@ function RecapFlipCards() {
   ]
 
   return (
-    <div
-      className="recap-flip"
-      onClick={(event) => event.stopPropagation()}
-    >
+    <div className="recap-flip">
       <h2 className="slide-title wide-title">
         What’s <span className="green">old</span>, what’s{' '}
         <span className="pink">new</span>
       </h2>
       <div className="recap-flip-grid">
-        {cards.map((card) => (
+        {cards.map((card, index) => (
           <div
             key={card.oldFront}
-            className="recap-flip-card"
-            tabIndex={0}
+            className={`recap-flip-card${
+              index < flippedCount ? ' is-flipped' : ''
+            }`}
           >
             <div className="recap-flip-inner">
               <div className="recap-flip-face recap-flip-front">
@@ -668,7 +646,17 @@ const slides: Slide[] = [
   },
   {
     eyebrow: 'Prompt-driven UX',
-    content: <PromptModesExplore />,
+    content: <PromptModesExplore activeId="screens" />,
+    className: 'modes-slide',
+  },
+  {
+    eyebrow: 'Prompt-driven UX',
+    content: <PromptModesExplore activeId="dialogue" />,
+    className: 'modes-slide',
+  },
+  {
+    eyebrow: 'Prompt-driven UX',
+    content: <PromptModesExplore activeId="prompts" />,
     className: 'modes-slide',
   },
   {
@@ -690,7 +678,12 @@ const slides: Slide[] = [
   },
   {
     eyebrow: 'System prompts',
-    content: <SystemPromptMock />,
+    content: <SystemPromptMock showSuggestion={false} />,
+    className: 'prompt-mock-slide',
+  },
+  {
+    eyebrow: 'System prompts',
+    content: <SystemPromptMock showSuggestion={true} />,
     className: 'prompt-mock-slide',
   },
   {
@@ -790,7 +783,7 @@ const slides: Slide[] = [
   {
     eyebrow: 'Example · Zendesk',
     content: (
-      <div className="zendesk-example">
+      <div className="zendesk-example zendesk-example-shot">
         <div className="zendesk-copy">
           <p className="kicker">Zendesk</p>
           <h2>
@@ -803,14 +796,36 @@ const slides: Slide[] = [
             before it ships.
           </p>
         </div>
-        <div className="zendesk-frames zendesk-frames-pair">
+        <div className="zendesk-frames zendesk-frames-single">
           <figure className="example-frame zendesk-frame">
             <img
               src={zendeskAutoAssist}
               alt="Zendesk Auto assist panel drafting a reply about a dark mode feature request, with an Approve button."
             />
           </figure>
-          <figure className="example-frame zendesk-frame zendesk-frame-why">
+        </div>
+      </div>
+    ),
+    className: 'era-slide',
+  },
+  {
+    eyebrow: 'Example · Zendesk',
+    content: (
+      <div className="zendesk-example zendesk-example-shot">
+        <div className="zendesk-copy">
+          <p className="kicker">Zendesk</p>
+          <h2>
+            Auto assist
+            <br />
+            <span className="pink">with a plain-language why</span>
+          </h2>
+          <p className="body-copy">
+            AI drafts the reply and shows its reasoning. Human still approves
+            before it ships.
+          </p>
+        </div>
+        <div className="zendesk-frames zendesk-frames-why">
+          <figure className="example-frame zendesk-frame">
             <img
               src={zendeskWhySuggestion}
               alt="Zendesk panel explaining why a suggestion was generated, with sources linking to Feature Requests and Enhancements."
@@ -823,7 +838,8 @@ const slides: Slide[] = [
   },
   {
     eyebrow: 'Recap',
-    content: <RecapFlipCards />,
+    builds: 3,
+    content: (build) => <RecapFlipCards flippedCount={build} />,
     className: 'recap-slide',
   },
   {
@@ -835,8 +851,7 @@ const slides: Slide[] = [
           <span className="pink">believe</span> the AI is.
         </h2>
         <p className="body-copy">
-          Anthropomorphism, expectations, and bias aren’t side effects. They’re
-          design outcomes.
+          Let’s talk biases: and how to design around them
         </p>
       </>
     ),
@@ -849,7 +864,10 @@ const slides: Slide[] = [
         <h2 className="slide-title wide-title">Emotional language</h2>
         <div className="anthro-pair">
           <article className="anthro-avoid">
-            <span className="card-label">Avoid</span>
+            <span className="anthro-label">
+              <EvalFailIcon />
+              Avoid
+            </span>
             <div className="agent-output">
               <span className="agent-output-meta">Agent</span>
               <p>
@@ -859,7 +877,10 @@ const slides: Slide[] = [
             </div>
           </article>
           <article className="anthro-instead">
-            <span className="card-label">Instead, try</span>
+            <span className="anthro-label">
+              <EvalPassIcon />
+              Instead, try
+            </span>
             <div className="agent-output">
               <span className="agent-output-meta">Agent</span>
               <p>
@@ -893,7 +914,10 @@ const slides: Slide[] = [
         </h2>
         <div className="anthro-pair">
           <article className="anthro-avoid">
-            <span className="card-label">Avoid</span>
+            <span className="anthro-label">
+              <EvalFailIcon />
+              Avoid
+            </span>
             <div className="agent-output">
               <span className="agent-output-meta">Agent</span>
               <p>
@@ -903,7 +927,10 @@ const slides: Slide[] = [
             </div>
           </article>
           <article className="anthro-instead">
-            <span className="card-label">Instead, try</span>
+            <span className="anthro-label">
+              <EvalPassIcon />
+              Instead, try
+            </span>
             <div className="agent-output">
               <span className="agent-output-meta">Agent</span>
               <p>
@@ -934,7 +961,10 @@ const slides: Slide[] = [
         <h2 className="slide-title wide-title">Confident tone</h2>
         <div className="anthro-pair">
           <article className="anthro-avoid">
-            <span className="card-label">Avoid</span>
+            <span className="anthro-label">
+              <EvalFailIcon />
+              Avoid
+            </span>
             <div className="agent-output">
               <span className="agent-output-meta">Agent</span>
               <p>
@@ -943,7 +973,10 @@ const slides: Slide[] = [
             </div>
           </article>
           <article className="anthro-instead">
-            <span className="card-label">Instead, try</span>
+            <span className="anthro-label">
+              <EvalPassIcon />
+              Instead, try
+            </span>
             <div className="agent-output">
               <span className="agent-output-meta">Agent</span>
               <p>
@@ -971,7 +1004,7 @@ const slides: Slide[] = [
   {
     eyebrow: 'The turn',
     content: (
-      <h2 className="display statement-display">
+      <h2 className="display statement-display language-quote">
         We design AI experiences…
         <br />
         but how do we <span className="green">design with AI</span>?
@@ -1113,6 +1146,31 @@ const slides: Slide[] = [
       </>
     ),
     className: 'question-slide question-pink',
+  },
+  {
+    eyebrow: 'Takeaways',
+    content: (
+      <div className="summary-slide">
+        <h2 className="slide-title wide-title">Leave with this</h2>
+        <div className="summary-grid">
+          <article>
+            <h3>Old craft, new surfaces</h3>
+            <p>
+              Put microcopy and plain language into conversations, prompts, and
+              outputs.
+            </p>
+          </article>
+          <article>
+            <h3>Evals keep the bar high</h3>
+            <p>Partner with engineering. Test the AI outputs.</p>
+          </article>
+          <article>
+            <h3>Skills scale the craft</h3>
+            <p>Encode the rules once. Stay the centaur on what ships.</p>
+          </article>
+        </div>
+      </div>
+    ),
   },
   {
     eyebrow: 'Thank you',
