@@ -173,7 +173,7 @@ function PromptModesExplore({
     {
       id: 'prompts' as const,
       label: 'Prompts',
-      detail: 'Intent suggested or typed in freeform',
+      detail: 'Intent, suggested or typed as freeform text',
       image: modePrompts,
       alt: 'Tatra prompt suggestions for hiking apps, packing, mountain huts, via ferrata, and avalanche safety.',
     },
@@ -399,16 +399,20 @@ function QuickPromptSkill() {
           Generates structured quick prompts that hold to the 2–4 word rule.
         </p>
         <div className="skill-output is-in">
-          <span>Create a trigger</span>
-          <span>Check duplicate triggers</span>
-          <span className="skill-output-check">
-            <EvalPassIcon /> 2–4 words · no I, me, my
-          </span>
+          <div className="skill-output-examples">
+            <span>Create a trigger</span>
+            <span>Check duplicate triggers</span>
+            <span className="skill-output-check">
+              <EvalPassIcon /> 2–4 words · no I, me, my
+            </span>
+          </div>
+          <p className="skill-credit">
+            Skill created by Liz Robins
+            <br />
+            (a fellow content designer at Zendesk)
+          </p>
         </div>
       </article>
-      <p className="skill-credit">
-        Skill created by Liz Robins (a fellow content designer at Zendesk)
-      </p>
     </div>
   )
 }
@@ -509,9 +513,9 @@ const slides: Slide[] = [
           </div>
           <div className="intro-statement">
             <p>
-              I started in writing.
+              I used to teach writing.
               <br />
-              <strong>Now I teach how words shape AI.</strong>
+              <strong>Now I teach how to work with AI.</strong>
             </p>
           </div>
         </div>
@@ -699,7 +703,7 @@ const slides: Slide[] = [
     content: (
       <div className="brevity-slide">
         <h2 className="display statement-display">
-          Content designers guard the{' '}
+          Content designers guard{' '}
           <span className="green">brevity</span>
         </h2>
         <cite className="brevity-citation">
@@ -795,7 +799,7 @@ const slides: Slide[] = [
             <span className="pink">with a plain-language why</span>
           </h2>
           <p className="body-copy">
-            AI drafts the reply and shows its reasoning. Human still approves
+            AI drafts the reply and shows its reasoning. A human still approves
             before it ships.
           </p>
         </div>
@@ -823,7 +827,7 @@ const slides: Slide[] = [
             <span className="pink">with a plain-language why</span>
           </h2>
           <p className="body-copy">
-            AI drafts the reply and shows its reasoning. Human still approves
+            AI drafts the reply and shows its reasoning. A human still approves
             before it ships.
           </p>
         </div>
@@ -854,7 +858,7 @@ const slides: Slide[] = [
           <span className="pink">believe</span> the AI is.
         </h2>
         <p className="body-copy">
-          Let’s talk biases: and how to design around them
+          Let’s talk about biases, and how to design around them
         </p>
       </>
     ),
@@ -1072,7 +1076,8 @@ const slides: Slide[] = [
             </div>
             <p>
               You stay in the same flow. You propose, AI challenges, you change
-              it, AI challenges again. The final copy is both of yours.
+              it, AI challenges again. You and the AI make it together.
+              Ownership stays with you.
             </p>
           </article>
         </div>
@@ -1120,7 +1125,7 @@ const slides: Slide[] = [
             </div>
             <p>
               Someone prompts without context and ships the copy. You keep
-              fixing what ships, and own the fallout.
+              fixing what ships, and you own the fallout.
             </p>
           </article>
         </div>
@@ -1169,7 +1174,7 @@ const slides: Slide[] = [
           </article>
           <article>
             <h3>Skills scale the craft</h3>
-            <p>Encode the rules once. Stay the centaur on what ships.</p>
+            <p>Encode the rules and share the tools. Stay the centaur on what ships.</p>
           </article>
         </div>
       </div>

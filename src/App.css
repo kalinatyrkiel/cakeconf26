@@ -776,7 +776,9 @@ h2 {
 
 .skill-output {
   display: grid;
-  gap: 12px;
+  grid-template-columns: 1fr auto;
+  gap: 12px 24px;
+  align-items: start;
   margin-top: clamp(20px, 2.4vw, 32px);
   padding: clamp(20px, 2.4vw, 32px);
   color: var(--white);
@@ -784,6 +786,11 @@ h2 {
   border: 1px solid rgba(255, 255, 255, 0.12);
   font-size: clamp(16px, 1.6vw, 22px);
   line-height: 1.4;
+}
+
+.skill-output-examples {
+  display: grid;
+  gap: 12px;
 }
 
 .skill-output-label {
@@ -810,13 +817,12 @@ h2 {
 }
 
 .skill-credit {
-  margin: -8px 0 0;
-  justify-self: end;
-  max-width: none;
+  margin: 0;
   color: var(--cite-meta);
   font-size: clamp(12px, 1.05vw, 15px);
-  line-height: 1.3;
+  line-height: 1.35;
   text-align: right;
+  white-space: nowrap;
 }
 
 .statement-slide .slide-content {
