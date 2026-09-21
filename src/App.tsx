@@ -386,7 +386,7 @@ function QuickPromptSkill() {
           Claude skills that <span className="green">scale</span> the craft
         </h2>
         <p className="skills-subhead">
-          Content designers write the rules – the skill scales them across the
+          Content designers write the rules. The skills scale them across the
           org.
         </p>
       </div>
@@ -406,6 +406,9 @@ function QuickPromptSkill() {
           </span>
         </div>
       </article>
+      <p className="skill-credit">
+        Skill created by Liz Robins (a fellow content designer at Zendesk)
+      </p>
     </div>
   )
 }
